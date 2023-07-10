@@ -8,7 +8,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Proxy;
@@ -16,14 +15,15 @@ import java.sql.Connection;
 
 @Slf4j
 @Aspect
-@Component
+//@Component
 public class DataBaseQueriesCollector {
 
-    @Autowired
-    private DataBaseQueryEntity dataBaseQueryEntity;
+    final private DataBaseQueryEntity dataBaseQueryEntity;
+
     final private IWSDispatcher wsDispatcher;
-    public DataBaseQueriesCollector(final IWSDispatcher wsDispatcher)
+    public DataBaseQueriesCollector(DataBaseQueryEntity dataBaseQueryEntity, final IWSDispatcher wsDispatcher)
     {
+        this.dataBaseQueryEntity = dataBaseQueryEntity;
         this.wsDispatcher = wsDispatcher;
     }
     private final static String API_POINTCUT = "execution(* javax.sql.DataSource.getConnection(..))";
@@ -32,12 +32,11 @@ public class DataBaseQueriesCollector {
 
     @Around("apiPointCut()")
     public Object intercept(final ProceedingJoinPoint joinPoint) throws Throwable {
-
+        if(CurrentRequestIDUtils.getCurrentRequestID() == null){
+            return joinPoint.proceed();
+        }
         final Connection connection = (Connection) joinPoint.proceed();
 
-        if(CurrentRequestIDUtils.getCurrentRequestID() == null){
-            return connection;
-        }
         return Proxy.newProxyInstance(
                 connection.getClass().getClassLoader(),
                 connection.getClass().getInterfaces(),

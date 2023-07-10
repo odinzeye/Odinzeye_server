@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.nimbleways</groupId>
 	<artifactId>odinzeye</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<name>odinzeye</name>
 	<description>odinzeye</description>
 	<properties>

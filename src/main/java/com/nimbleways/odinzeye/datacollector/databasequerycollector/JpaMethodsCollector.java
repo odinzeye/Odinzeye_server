@@ -1,6 +1,7 @@
 package com.nimbleways.odinzeye.datacollector.databasequerycollector;
 
 
+import com.nimbleways.odinzeye.datacollector.services.CurrentRequestIDUtils;
 import com.nimbleways.odinzeye.websocket.IWSDispatcher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -23,6 +24,9 @@ public class JpaMethodsCollector {
 
     @Around("execution(* org.springframework.data.jpa.repository.JpaRepository+.*(..))  && target(repository)")
     public Object interceptJpaRepositoryMethods(ProceedingJoinPoint joinPoint, JpaRepository<?,?> repository) throws Throwable {
+        if(CurrentRequestIDUtils.getCurrentRequestID() == null){
+            return joinPoint.proceed();
+        }
         dataBaseQueryEntity.setDispatchedFromJPA(true);
 
         Object result = joinPoint.proceed();
