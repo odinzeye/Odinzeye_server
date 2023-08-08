@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -15,6 +16,7 @@ import java.util.List;
 @Component
 @RequestScope
 public class DataBaseQueryEntity {
+
     private String sql;
 
     private String type;
@@ -25,7 +27,7 @@ public class DataBaseQueryEntity {
 
     private double executionDuration;
 
-    private LocalDateTime timeStamp;
+    private OffsetDateTime timeStamp;
 
     private List<String> boundParams;
 
@@ -51,6 +53,9 @@ public class DataBaseQueryEntity {
         this.paramsDbTypes = dataBaseQueryEntity.getParamsDbTypes();
         this.paramJavaTypes = dataBaseQueryEntity.getParamJavaTypes();
         this.isDispatchedFromJPA = dataBaseQueryEntity.isDispatchedFromJPA();
-        this.requestID = dataBaseQueryEntity.requestID;
+        this.requestID = dataBaseQueryEntity.getRequestID();
+        this.queryResult = dataBaseQueryEntity.getQueryResult();
+        this.methodName = dataBaseQueryEntity.getMethodName();
+        this.className = dataBaseQueryEntity.getClassName();
     }
 }

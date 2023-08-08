@@ -3,15 +3,18 @@ package com.nimbleways.odinzeye.datacollector.databasequerycollector;
 
 
 import com.nimbleways.odinzeye.datacollector.services.CurrentRequestIDUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.ParameterMetaData;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+@Slf4j
 
 public class DataBaseQueriesEntityHelper {
-    public static DataBaseQueryEntity build(final Object[] args, final String methodName, long executionTime, LocalDateTime timeStamp, List<String> boundParams, List<String> paramsDbTypes, List<String> paramJavaTypes, boolean isDispatchedFromJPA) {
+    public static DataBaseQueryEntity build(final Object[] args, final String methodName, long executionTime, OffsetDateTime timeStamp, List<String> boundParams, List<String> paramsDbTypes, List<String> paramJavaTypes, boolean isDispatchedFromJPA) {
         final String requestID = CurrentRequestIDUtils.getCurrentRequestID();
 
         String type = "";

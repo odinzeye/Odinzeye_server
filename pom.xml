@@ -10,13 +10,14 @@
 	</parent>
 	<groupId>com.nimbleways</groupId>
 	<artifactId>odinzeye</artifactId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<name>odinzeye</name>
 	<description>odinzeye</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>

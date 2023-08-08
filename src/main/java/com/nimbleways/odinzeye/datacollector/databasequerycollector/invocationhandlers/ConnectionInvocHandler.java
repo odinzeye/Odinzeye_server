@@ -10,6 +10,7 @@ import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +34,7 @@ public class ConnectionInvocHandler implements InvocationHandler {
             List<String> boundParams = new ArrayList<>();
             List<String> paramsDbTypes = new ArrayList<>();
             List<String> paramsJavaTypes = new ArrayList<>();
-            final LocalDateTime timeStamp = LocalDateTime.now();
-
+            final OffsetDateTime timeStamp = OffsetDateTime.now();
             final long startTime = System.nanoTime();
             final PreparedStatement preparedStatement = (PreparedStatement) method.invoke(connection, args);
             final long endTime = System.nanoTime();
