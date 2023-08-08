@@ -24,6 +24,7 @@ public class WSDispatcher implements IWSDispatcher {
     {
         this.template = template;
     }
+
     @Override
     public void sendCollectedDBQueries(final DataBaseQueryEntity dataBaseQueryEntity){
         String CLIENT_ID = CurrentRequestIDUtils.getCurrentClientID();

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 
 @AllArgsConstructor
-public class LogsConfiguration {
+public class LogsCollector {
     private final IWSDispatcher wsDispatcher;
 
     public void configure() {
@@ -21,6 +21,7 @@ public class LogsConfiguration {
         encoder.start();
 
         LogbackAppender appender = new LogbackAppender(encoder, wsDispatcher);
+        appender.setName("OdinzEyeAppender");
         appender.setContext(loggerContext);
         appender.start();
 
