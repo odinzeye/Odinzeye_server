@@ -9,7 +9,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.List;
 public class ConnectionInvocHandler implements InvocationHandler {
 
     private DataBaseQueryEntity dataBaseQueryEntity;
-    final private Connection connection;
-    final private IWSDispatcher wsDispatcher;
+    private final Connection connection;
+    private final IWSDispatcher wsDispatcher;
 
     public ConnectionInvocHandler (Connection connection, DataBaseQueryEntity dataBaseQueryEntity, IWSDispatcher wsDispatcher)
     {

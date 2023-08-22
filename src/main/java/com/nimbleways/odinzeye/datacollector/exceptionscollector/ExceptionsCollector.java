@@ -21,7 +21,7 @@ public class ExceptionsCollector {
         Object[] args = joinPoint.getArgs();
 
         for (Object arg : args)
-            if(arg instanceof Exception)
-                exceptionsCollectorHelper.processException((Exception) arg);
+            if(arg instanceof Exception exception)
+                exceptionsCollectorHelper.processException(exception);
     }
 }

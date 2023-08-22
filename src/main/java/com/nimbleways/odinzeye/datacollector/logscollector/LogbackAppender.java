@@ -9,8 +9,8 @@ import java.nio.charset.StandardCharsets;
 
 public class LogbackAppender extends AppenderBase<ILoggingEvent>{
 
-    final private PatternLayoutEncoder encoder;
-    final private IWSDispatcher wsDispatcher;
+    private final PatternLayoutEncoder encoder;
+    private final IWSDispatcher wsDispatcher;
 
     public LogbackAppender(final PatternLayoutEncoder encoder, final IWSDispatcher wsDispatcher)
     {
@@ -20,7 +20,7 @@ public class LogbackAppender extends AppenderBase<ILoggingEvent>{
 
     @Override
     protected void append(ILoggingEvent eventObject) {
-        byte[] data = this.encoder.encode(eventObject);
-        wsDispatcher.sendCollectedLogs(new LogsEntity(eventObject.getLevel().levelStr, new String(data, StandardCharsets.UTF_8)));
+        String data = this.encoder.getLayout().doLayout(eventObject);
+        wsDispatcher.sendCollectedLogs(new LogsEntity(eventObject.getLevel().levelStr, data));
     }
 }

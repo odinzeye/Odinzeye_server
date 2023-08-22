@@ -20,9 +20,9 @@ import java.util.Optional;
 @Component
 public class DataBaseQueriesCollector {
 
-    private DataBaseQueryEntity dataBaseQueryEntity;
+    private final DataBaseQueryEntity dataBaseQueryEntity;
 
-    final private IWSDispatcher wsDispatcher;
+    private final IWSDispatcher wsDispatcher;
 
     public DataBaseQueriesCollector(DataBaseQueryEntity dataBaseQueryEntity, final IWSDispatcher wsDispatcher)
     {
@@ -30,14 +30,16 @@ public class DataBaseQueriesCollector {
         this.wsDispatcher = wsDispatcher;
     }
 
-    private final static String API_POINTCUT = "execution(* javax.sql.DataSource.getConnection(..))";
+    private static final String API_POINTCUT = "execution(* javax.sql.DataSource.getConnection(..))";
 
     @Pointcut(API_POINTCUT)
-    public void apiPointCut(){};
+    public void apiPointCut(){}
 
     @Around("apiPointCut()")
     public Object interceptJDBCData(final ProceedingJoinPoint joinPoint) throws Throwable
     {
+
+        boolean isInReq = inTheContextOfARequest();
         if(!inTheContextOfARequest()){
             return joinPoint.proceed();
         }
@@ -67,7 +69,7 @@ public class DataBaseQueriesCollector {
         dataBaseQueryEntity.setClassName(className);
         dataBaseQueryEntity.setQueryResult(result);
 
-        if(result==null | (result instanceof Optional && ((Optional) result).isEmpty())){
+        if(result==null || (result instanceof Optional && ((Optional) result).isEmpty())){
             dataBaseQueryEntity.setQueryResult("");
         }
 

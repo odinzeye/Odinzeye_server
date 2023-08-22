@@ -25,7 +25,7 @@ public class PreparedStmtInvocHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         ParameterMetaData paramMetaData = preparedStatement.getParameterMetaData();
         if (method.getName().startsWith("set")) {
-            DataBaseQueriesEntityHelper.AssignTypesToSqlValues(args, paramMetaData, boundParams, paramsDbTypes, paramsJavaTypes);
+            DataBaseQueriesEntityHelper.assignTypesToSqlValues(args, paramMetaData, boundParams, paramsDbTypes, paramsJavaTypes);
         }
         return method.invoke(preparedStatement, args);
     }
